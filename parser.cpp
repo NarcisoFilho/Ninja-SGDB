@@ -56,12 +56,12 @@
 //         case COMMAND::ADDCITY:
 //             if( qtd_args == 3 ){
 //                 cout << endlT << "name: " << args[1] << endl;
-//                 cout << endlT << "country_cod: " << args[2] << endl;
+//                 cout << endlT << "id: " << args[2] << endl;
 //                 cout << endlT << "population: " << args[3] << endl;
 //                 cout << endlT << "tipo" << args[4] << endl;
 //                 cout << endlT << "lat: " << args[5] << endl;
 //                 cout << endlT << "lng: " << args[6] << endl;
-//                 cout << endlT << "city_cod: " << args[7] << endl;
+//                 cout << endlT << "id: " << args[7] << endl;
 //             }else if( qtd_args < 7 )
 //                 printError( Error::ERROR_FEW_ARGUMENTS );
 //             else if( qtd_args > 7 )

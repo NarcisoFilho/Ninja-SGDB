@@ -3,6 +3,11 @@
         "string": "cpp",
         "cstring": "cpp",
         "fstream": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "filesystem": "cpp",
+        "iosfwd": "cpp",
+        "string_view": "cpp",
+        "cctype": "cpp",
+        "ostream": "cpp"
     }
 }

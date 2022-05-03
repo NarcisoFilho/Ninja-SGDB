@@ -6,13 +6,13 @@
 
 class City{
     public:
-    long int city_cod;  // PK
+    int id;  // PK
     char name[30];
-    int country_cod;    // FK
-    long int population;
+    int population;
     char type[15];
     float lat;
     float lng;
+    int country_cod;    // FK
 
     public:
     friend ostream& operator<<( ostream& , City );
@@ -20,8 +20,8 @@ class City{
 };
 
 void City::print_header(){
-    cout << ">>CITIES TABLE" << endl;
-    cout << setw(PD_CITY_CODE_COL_WIDTH) << "ID";
+    cout << tab << ">>CITIES TABLE" << endl;
+    cout << tab << setw(PD_CITY_CODE_COL_WIDTH) << "ID";
     cout << " | " << setw(PD_NAME_COL_WIDTH) << "NAME";
     cout << " | " << setw(PD_POP_COL_WIDTH) << "POPULATION";
     cout << " | " << setw(PD_TYPE_COL_WIDTH) << "TYPE";
@@ -32,13 +32,13 @@ void City::print_header(){
 
 
 ostream& operator<<( ostream& stream , City city ){
-    stream << setw(PD_NAME_COL_WIDTH) << city.name;
+    stream << tab << setw(PD_CITY_CODE_COL_WIDTH) << city.id;
+    stream << " | " << setw(PD_NAME_COL_WIDTH) << city.name;
     stream << " | " << setw(PD_POP_COL_WIDTH) << city.population;
     stream << " | " << setw(PD_TYPE_COL_WIDTH) << city.type;
     stream << " | " << setw(PD_LAT_COL_WIDTH) << city.lat;
     stream << " | " << setw(PD_LNG_COL_WIDTH) << city.lng;
-    stream << " | " << setw(PD_COUNTRY_CODE_COL_WIDTH) << city.country_cod;
-    stream << " | " << setw(PD_CITY_CODE_COL_WIDTH) << city.city_cod << endl;
+    stream << " | " << setw(PD_COUNTRY_CODE_COL_WIDTH) << city.country_cod << endl;
 
     return stream;
 }

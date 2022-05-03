@@ -6,7 +6,7 @@ using namespace std;
 
 class Country{
     public:
-    int country_cod;        // PK
+    int id;        // PK
     char name[30];
     char alpha2[3];
     char alpha3[4];
@@ -19,8 +19,8 @@ class Country{
 
 };
 
-Country::Country( int country_cod = 0, string name = "", string alpha2 = "", string alpha3 = "", string region = "" ){
-    this->country_cod = country_cod;
+Country::Country( int id = 0, string name = "", string alpha2 = "", string alpha3 = "", string region = "" ){
+    this->id = id;
     name.copy( this->name , name.length() ,0 );
     alpha2.copy( this->alpha2 , alpha2.length() ,0 );
     alpha3.copy( this->alpha3 , alpha3.length() ,0 );
@@ -28,20 +28,20 @@ Country::Country( int country_cod = 0, string name = "", string alpha2 = "", str
 }
 void Country::print_header(){
     cout << ">>COUNTRIES TABLE" << endl;
-    cout << setw(PD_NAME_COL_WIDTH) << "NAME";
+    cout << setw(PD_COUNTRY_CODE_COL_WIDTH) << "ID";
+    cout << " | " << setw(PD_NAME_COL_WIDTH) << "NAME";
     cout << " | " << setw(PD_ALPHA2_COL_WIDTH) << "ISO2";
-    cout << " | " << setw(PD_REGION_COL_WIDTH) << "ISO3";
-    cout << " | " << setw(PD_LNG_COL_WIDTH) << "REGION";
-    cout << " | " << setw(PD_COUNTRY_CODE_COL_WIDTH) << "ID" << endl;
+    cout << " | " << setw(PD_ALPHA3_COL_WIDTH) << "ISO3";
+    cout << " | " << setw(PD_REGION_COL_WIDTH) << "REGION" << endl;
 }
 
 
 ostream& operator<<( ostream& stream , Country country ){
-    stream << setw(PD_NAME_COL_WIDTH) << country.name;
+    stream << setw(PD_COUNTRY_CODE_COL_WIDTH) << country.id;
+    stream << " | " << setw(PD_NAME_COL_WIDTH) << country.name;
     stream << " | " << setw(PD_ALPHA2_COL_WIDTH) << country.alpha2;
     stream << " | " << setw(PD_ALPHA3_COL_WIDTH) << country.alpha3;
-    stream << " | " << setw(PD_REGION_COL_WIDTH) << country.region;
-    stream << " | " << setw(PD_COUNTRY_CODE_COL_WIDTH) << country.country_cod << endl;
+    stream << " | " << setw(PD_REGION_COL_WIDTH) << country.region << endl;
 
     return stream;
 }

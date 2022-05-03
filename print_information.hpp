@@ -30,7 +30,7 @@ void printBye(){
 }
 
 void printError( Error error ){
-    cout << endl << "\aERROR: ";
+    cout << endl << tab << "\aERROR: ";
     switch( error ){
         case Error::ERROR_MANY_ARGUMENTS:
             cout << "Too many arguments for this command" << endl;
@@ -43,6 +43,27 @@ void printError( Error error ){
             break; 
         case Error::ERROR_TABLE_TYPE_INVALID:
             cout << "Invalid Table Type" << endl;
+            break; 
+        case Error::ERROR_TABLE_FILE_OPENING:
+            cout << "Can't open table file" << endl;
+            break; 
+        case Error::ERROR_REGISTERS_FILE_OPENING:
+            cout << "Can't open registers file" << endl;
+            break; 
+        case Error::ERROR_INVALID_KEY:
+            cout << "Invalid key to sorting" << endl;
+            break; 
+        case Error::ERROR_ORDER_TYPE_INVALID:
+            cout << "Order typer invalid" << endl;
+            break; 
+        case Error::ERROR_SORT_TREE_FILE_CREATING:
+            cout << "Can't create sort tree file" << endl;
+            break; 
+        case Error::ERROR_INVALID_NUMBER_OF_ARGUMENTS:
+            cout << "Invalid number of arguments for this command" << endl;
+            break; 
+        case Error::ERROR_ACCESS_SORT_TREE:
+            cout << "Can't access sort tree file" << endl;
             break; 
     }
     cout << tab << "Tip: Try to use the command 'help'..." << endl;
@@ -76,19 +97,19 @@ void print_help_other_msgs( COMMAND command ){
                 cout << "It take all the registers in the file and append them in the respective table." << endl;
 
                 cout << endl << tab(2) << "Types:" << endl;
-                cout << tab(3) << "-cityf" << "A city file" << endl;
-                cout << tab(3) << "-countryf" << "A country file" << endl;
+                cout << tab(3) << "-cityF" << " :  A city file" << endl;
+                cout << tab(3) << "-countryF" << " :  A country file" << endl;
 
                 cout << endl << tab(2) << "Examples:" << endl;
-                cout << tab(3) << " addfile my_file_of_cities -cityf" << endl;
-                cout << tab(3) << " addfile my_file_of_countries -countryf" << endl;
+                cout << tab(3) << " addfile my_file_of_cities -cityF" << endl;
+                cout << tab(3) << " addfile my_file_of_countries -countryF" << endl;
                 break;
         case COMMAND::DELCITY:
                 cout << "Delete one register of the Cities Table." << endl;
 
                 cout << endl << tab(2) << "Examples:" << endl;
                 cout << tab(3) << "delcity city_name" << endl;
-                cout << tab(3) << "delcity city_cod" << endl;
+                cout << tab(3) << "delcity id" << endl;
                 break;
         case COMMAND::EXIT:
                 cout << "exit: Stop the program  and go out to the OS" << endl;
@@ -137,67 +158,8 @@ void print_help_other_msgs( COMMAND command ){
     }
 }
 
-
-// void printHelp( string command ){
-
-//     if( command == "addcity" ){
-//         cout << tab(2) << "addcity [name] [country_cod] [population] [tipo] [lat] [lng] [city_cod]  " << endl;
-//         cout << tab(3) << "Append one register of city to the cities table" << endl;
-//     }else if( command == "addcountry" ){
-//         cout << tab(2) << "addcountry [name] [region] [exitalpha-2] [alpha-3] [country-cod]" << endl;
-//         cout << tab(3) << "Append one register of country to the countries table" << endl;
-//     }else if( command == "addfile" ){
-//         cout << tab << "addfile [file] [type]: Append the table of cities or countries by one file." << endl;
-//         cout << tab(2) << "It take all the registers in the file and append them in the respective table." << endl;
-
-//         cout << endl << tab(2) << "Types" << endl;
-//         cout << tab(3) << "-cityf" << "A city file" << endl;
-//         cout << tab(3) << "-countryf" << "A country file" << endl;
-
-//         cout << endl << tab(2) << "Examples:" << endl;
-//         cout << tab(3) << " addfile my_file_of_cities -cityf" << endl;
-//         cout << tab(3) << " addfile my_file_of_countries -countryf" << endl;
-//     }else if( command == "exit" ){
-//         cout << tab << "exit: Stop the program  and go out to the OS" << endl;
-//     }else if( command == "filter" ){
-//         cout << tab << "filter [table] [key1] [condition_key1] [key2] [condition_key2] ... :" << endl;
-//         cout << tab(2) << "Return only the registers wiches key(s) attend(s) the conditions." << endl;
-
-//         cout << endl << tab(2) << "Operators for the conditions:" << endl;
-//         cout << tab(3) << "[=]: " << "Use equals sign at the beginning of condition to say that the key must be equal to value " << endl;
-//         cout << tab(3) << "[!]: " << "Use exclamation at the beginning of condition to say that the key must be diferent to value " << endl;
-//         cout << tab(3) << "[<]: " << "Use less than sign at beginning of condition to say that key must be less than value " << endl;
-//         cout << tab(3) << "[>]: " << "Use greater than sign at beginning of condition to say that key must be greater than value " << endl;
-//         cout << endl << tab(2) << "Parameters:" << endl;
-//         cout << tab(3) << "-ncs: No Case Sensitive.Disregards if the letters are capitalized or not in the comparation of strings." << endl;
-
-//         cout << endl << tab(2) << "Examples:" << endl;
-//         cout << tab(3) << " filter my_file age >18   // This filter the registers with age greter than 18 years" << endl;
-//         cout << tab(3) << " filter my_file name =Peter   // This filter the registers with name equal to Peter(with capital P)" << endl;
-//         cout << tab(3) << " filter my_file name =Peter -ncs   // This make almost the same, but do not matter capital or non capital letters" << endl;
-//     }else if( command == "help" ){
-//         cout << tab << "- help: Show a list of all the commands and a brief" << endl;
-//         cout << tab << "- help [command]: Show a more deeply explanation about one specific command" << endl;
-//     }else if( command == "printtable" ){
-//         cout << tab << "printtable [table]: Print the content of one table or combinations" << endl;
-//         cout << tab(2) << "Types:" << endl;
-//         cout << tab(3) << "-citiesT: The city table " << endl;
-//         cout << tab(3) << "-countryT: The country table" << endl;
-//         cout << tab(3) << "-ccT: The city table showing country data" << endl;
-//     }else if( command == "sort" ){
-//         cout << tab << "sort [table] [key] [order]: Sort and return the data from one table. The sorting is made with respect to key" << endl;
-        
-//         cout << tab(2) << "Table Options" << endl;
-//         cout << tab(3) << "-citiesT: Cities Table" << endl;
-//         cout << tab(3) << "-countryT: Countries Table" << endl;
-        
-//         cout << tab(2) << "Order Options" << endl;
-//         cout << tab(3) << "-ascending: Ascending order" << endl;
-//         cout << tab(3) << "-a: Brief for Ascending order" << endl;
-//         cout << tab(3) << "-descending: Descending order" << endl;
-//         cout << tab(3) << "-d: Brief for Descending order" << endl;
-//     }
-// }
-
+void print_table_empty(){
+    cout << tab << "___Table EMPTY___" << endl;
+}
 
 #endif //__PRINT_INFORMATION_HPP

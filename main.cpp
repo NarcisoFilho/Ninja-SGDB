@@ -24,7 +24,7 @@ using namespace std;
 int main( int argc , char *argv[] ){
     string input;
     COMMAND command;
-    string args[15];
+    string args[25];
     int qtd_args;
     bool flag_exit = false;
     int status_execution;
