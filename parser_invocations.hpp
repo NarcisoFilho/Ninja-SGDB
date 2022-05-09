@@ -22,8 +22,8 @@ int parser_ADDCITY( string *args , int qtd_args ){
     args[3].copy( city.type , args[3].length() , 0 ); // type
     city.type[ args[3].length() ] = '\0';
 
-    city.lat = stoi( args[4] ); // lat
-    city.lng = stoi( args[5] ); // lng
+    city.lat = stof( args[4] ); // lat
+    city.lng = stof( args[5] ); // lng
     city.country_cod = stoi( args[6] ); // country_cod
 
     // Write city in the table
@@ -59,35 +59,95 @@ int parser_ADDCOUNTRY( string *args , int qtd_args ){
 namespace fs = std::filesystem;
 
 int parser_ADDFILE( string *args , int qtd_args ){
+    fstream table( CITIES_T , ios::binary | ios::in | ios::out );
     ifstream registers_file( args[ 2 ] , F_IN );
     string input_line;
     string *atributes = new string[4 * QTD_KEYS_CITY];
     int qtd_atributes;
     int *col_atributes = new int[4 * QTD_KEYS_CITY];
-cout << args[2] << endl;
-cout << fs::current_path() << endl;
+    int *arg_atribute = new int[QTD_KEYS_CITY];
+
+    City city;
+    int last_id;
+
+    if( !table.is_open() ){
+        printError( Error::ERROR_TABLE_FILE_OPENING );
+        return 1;
+    }
+
+    table.seekg( -sizeof( City ) , ios::end );
+    table.read( (char*)&city , sizeof( City ) );
+    table.close();
+    last_id = city.id;
+
+    table.open( CITIES_T , ios::binary | ios::app );
+
+    if( !table.is_open() ){
+        printError( Error::ERROR_TABLE_FILE_OPENING );
+        return 1;
+    }
+
     for( int i = 0 ; i < 4 * QTD_KEYS_CITY ; i++ )
         col_atributes[ i ] = -1;
     
     if( registers_file.is_open() ){
         getline( registers_file , input_line );
         separate_args_from_input_line( input_line , atributes , qtd_atributes , ',' , true );
-        cout << input_line << endl;
         
         for( int i = 0 ; i < qtd_atributes ; i++ ){
-            cout << atributes[ i ] << endl;
             for( int j = 0 ; j < QTD_KEYS_CITY ; j++ ){
                 if( is_in( my_toupper(atributes[ i ]) , KEYS_NAMES_CITY[ j ] ) )
                     col_atributes[ i ] = j;
             }
         }
 
-        for( int t = 0  ; t < qtd_atributes ; t++ )
-            cout << "Header Column " << t << " : " << atributes[ t ] << "    -> " << col_atributes[ t ] << endl;
+        for( int j = 0 ; j < QTD_KEYS_CITY ; j++ ){
+            for( int i = 0 ; i < qtd_atributes ; i++ ){
+                if( col_atributes[ i ] == j )
+                    arg_atribute[ j ] = i;
+            }
+        }
+        // for( int t = 0  ; t < qtd_atributes ; t++ )
+        //     cout << "Header Column " << t << " : " << atributes[ t ] << "    -> " << col_atributes[ t ] << endl;
+        cout << tab << "Registers added:" << endl;
+        City::print_header(false);
+        while( !registers_file.eof() ){
+            getline( registers_file , input_line );
+            separate_args_from_input_line( input_line , atributes , qtd_atributes , ',' , true );
+
+            city.id = ++last_id;
+            if( atributes[ arg_atribute[ 1 ] ] != "" )
+                strcpy( city.name , atributes[ arg_atribute[ 1 ] ].c_str() );
+            else
+                strcpy( city.name , "?" );
+
+            if( atributes[ arg_atribute[ 2 ] ] != "" )
+                city.population = stoi( atributes[ arg_atribute[ 2 ] ] );
+            else
+                city.population = -1;
+
+            if( atributes[ arg_atribute[ 3 ] ] != "" )
+                strcpy( city.type , atributes[ arg_atribute[ 3 ] ].c_str() );
+            else
+                strcpy( city.type , "?" );
+
+            city.lat = stof( atributes[ arg_atribute[ 4 ] ] );
+            city.lng = stof( atributes[ arg_atribute[ 5 ] ] );
+            
+            cout << city;
+            table.clear();
+            // table.seekp( ios::end );
+            table.write( (char*)&city , sizeof(City) );
+            
+
+        }
     }else{
         printError( Error::ERROR_REGISTERS_FILE_OPENING );
     }
 
+    delete[] arg_atribute;
+    delete[] col_atributes;
+    delete[] atributes;
     return 0;
 }
 

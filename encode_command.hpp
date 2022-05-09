@@ -27,7 +27,7 @@ COMMAND encode_command( string cmd_str ){
             return COMMAND::HELP ;
         if( cmd_str == "printtable" )
             return COMMAND::PRINTSORTETREE;
-        if( cmd_str == "printinversefile" )
+        if( cmd_str == "printinvfile" )
             return COMMAND::PRINTTABLE;
         if( cmd_str == "sort" )
             return COMMAND::SORT;

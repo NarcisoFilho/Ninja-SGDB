@@ -16,11 +16,13 @@ class City{
 
     public:
     friend ostream& operator<<( ostream& , City );
-    static void print_header();
+    static void print_header(bool);
 };
 
-void City::print_header(){
-    cout << tab << ">>CITIES TABLE" << endl;
+void City::print_header( bool over_header = true ){
+    if( over_header )
+        cout << tab << ">>CITIES TABLE" << endl;
+
     cout << tab << setw(PD_CITY_CODE_COL_WIDTH) << "ID";
     cout << " | " << setw(PD_NAME_COL_WIDTH) << "NAME";
     cout << " | " << setw(PD_POP_COL_WIDTH) << "POPULATION";
@@ -34,7 +36,7 @@ void City::print_header(){
 ostream& operator<<( ostream& stream , City city ){
     stream << tab << setw(PD_CITY_CODE_COL_WIDTH) << city.id;
     stream << " | " << setw(PD_NAME_COL_WIDTH) << city.name;
-    stream << " | " << setw(PD_POP_COL_WIDTH) << city.population;
+    stream << " | " << setw(PD_POP_COL_WIDTH) << (city.population != -1 ? city.population : '?');
     stream << " | " << setw(PD_TYPE_COL_WIDTH) << city.type;
     stream << " | " << setw(PD_LAT_COL_WIDTH) << city.lat;
     stream << " | " << setw(PD_LNG_COL_WIDTH) << city.lng;

@@ -50,7 +50,7 @@ void separate_args_from_input_line( string input , string* args , int& qtd_args 
     while( input != "" ){
         // Remove the spaces from commando
         input = input.substr( input.find_first_not_of( ' ' ) );
-cout << input << endl;
+
         // Determine end of next argument
         if( discard_double_quotes ){
             if( input[ 0 ] == '\"' ){
